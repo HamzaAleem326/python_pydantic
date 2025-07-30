@@ -8,6 +8,7 @@ class Product(BaseModel):
     price:float
     instock:bool = True # we can also add default value
 
+
 GPU = {'id':101, 'name':'Nvidia Rtx 5090', 'price':2000, 'instock':True}
 product = Product(**GPU)
 print(product)
