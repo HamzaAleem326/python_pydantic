@@ -1,16 +1,15 @@
+# Field allows adding validations, metadata and constraints to model fields
 from pydantic import BaseModel, Field # type: ignore
 from typing import Optional
 
 class Employee(BaseModel):
-    id:int
-    name:str = Field(
-        ..., # when something is mandatory
-        min_length=3,
-        max_length=20,
-        description_name='Name of the employee'
-        example='Hamza Aleem'
-        )
-    department:Optional[str] = 'general'
-    salary:float = Field(..., gt=0) # gt means greater than zero
-    email:str = Field(..., regex=r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$')
-     # regex means regular expression
+    id: int
+    name: str = Field(
+        ...,  # ... means this field is required (Pydantic's explicit way to mark required fields)
+        min_length=3,  # Pydantic will validate minimum string length
+        max_length=20, # Pydantic will validate maximum string length
+        description='Name of the employee',  # Field metadata for documentation
+        example='Hamza Aleem'  # Example value for documentation
+    )
+    department: Optional[str] = 'general'  # Optional field with default value
+    salary: float = Field(..., gt=0)  # Validate salary is greater than 0
