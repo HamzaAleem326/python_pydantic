@@ -1,15 +1,39 @@
-# Field allows adding validations, metadata and constraints to model fields
-from pydantic import BaseModel, Field # type: ignore
+"""
+🎯 ASSIGNMENT: Use Pydantic with field validation and optional fields
+
+TASKS:
+1. Create an Employee model with the following fields:
+    - id: int
+    - name: str (required, min 3 characters, max 20 characters)
+    - department: Optional[str], defaults to 'general'
+    - salary: float (must be greater than 0)
+2. Use Pydantic's Field to define constraints and metadata.
+3. Create an instance of Employee with valid data and print it.
+"""
+
+from pydantic import BaseModel, Field  # type: ignore
 from typing import Optional
 
+# ✅ Step 1: Define the model with validation
 class Employee(BaseModel):
     id: int
     name: str = Field(
-        ...,  # ... means this field is required (Pydantic's explicit way to mark required fields)
-        min_length=3,  # Pydantic will validate minimum string length
-        max_length=20, # Pydantic will validate maximum string length
-        description='Name of the employee',  # Field metadata for documentation
-        example='Hamza Aleem'  # Example value for documentation
+        ...,  # Required field
+        min_length=3,
+        max_length=20,
+        description="Name of the employee",
+        example="Hamza Aleem"
     )
-    department: Optional[str] = 'general'  # Optional field with default value
-    salary: float = Field(..., gt=0)  # Validate salary is greater than 0
+    department: Optional[str] = 'general'  # Optional with default
+    salary: float = Field(..., gt=0)  # Must be > 0
+
+# ✅ Step 2: Create valid employee instance
+employee = Employee(
+    id=1,
+    name="Hamza Aleem",
+    department="Engineering",
+    salary=150000
+)
+
+# ✅ Step 3: Output the result
+print(employee)
